@@ -17,12 +17,15 @@ async function criaVideo(titulo, descricao, url, imagem){
             imagem: imagem
         })
     });
+    if(!conexao.ok){
+        throw  new Error("Não foi possivel salvar o vídeo");
+    }
     const conexaoConvertida = await conexao.json();
     return conexaoConvertida;
 }
 
 async function buscaVideo(termo){
-    const conexao = await fetch(`http://localhost:3000/videos/${termo}`);
+    const conexao = await fetch(`http://localhost:3000/videos?q=${termo}`);
     const conexaoConvertida = await conexao.json();
     return conexaoConvertida;
 }

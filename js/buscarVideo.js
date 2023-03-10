@@ -4,6 +4,7 @@ import constroicard from "./mostarvideos.js";
 async function buscarVideo(evento){
     evento.preventDefault();
     const dadosPesquisa = document.querySelector("[data-pesquisa]").value;
+    console.log( dadosPesquisa)
     const busca = await conectaApi.buscaVideo(dadosPesquisa);
    
     const lista = document.querySelector("[data-lista]");
@@ -11,9 +12,12 @@ async function buscarVideo(evento){
     while(lista.firstChild){
         lista.removeChild(lista.firstChild);
     }
-
-    busca.array.forEach(e => lista.appendChild(constroicard(e.titulo, e.dedscricao, e.url, e.imagem)));
-        
+    console.log(busca)
+    busca.forEach(elemento => lista.appendChild(constroicard(elemento.titulo, elemento.dedscricao, elemento.url, elemento.imagem)));
+    
+    if(lista.length == 0){
+        lista.innerHTML = `<h2 class='mensagem__titulo'>Infelizmente não encontramos nenhum vídeo</h2>`
+    }
     
 }
 
